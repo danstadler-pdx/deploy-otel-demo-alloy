@@ -30,6 +30,14 @@ spec:
     opensearch:
       enabled: false
 
+    # these are already in place in this exercise, so don't deploy them again
+    frontend:
+      enabled: false
+    frontendProxy:
+      enabled: false
+    kafka:
+      enabled: false
+
     # uncommment 4 lines below to expose the frontend proxy with an external IP address (tested only on GKE)
     components:
       frontendProxy:
