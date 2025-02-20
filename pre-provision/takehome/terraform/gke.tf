@@ -83,10 +83,10 @@ resource "google_container_node_pool" "big_nodes" {
   cluster    = google_container_cluster.primary.name
   version = data.google_container_engine_versions.gke_version.release_channel_latest_version["STABLE"]
 
-  node_count = 2
+  node_count = 1
   autoscaling {
-	min_node_count = "2"
-	max_node_count = "2"
+	min_node_count = "1"
+	max_node_count = "1"
   }
 
   node_config {
