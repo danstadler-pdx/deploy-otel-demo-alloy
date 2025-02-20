@@ -82,10 +82,10 @@ spec:
           resources:
             requests:
               cpu: "1.2"
-              memory: 400Mi
+              memory: 3000Mi
             limits:
               cpu: "1.8"
-              memory: 800Mi
+              memory: 4000Mi
           securityContext:
             runAsGroup: 1001
             runAsNonRoot: true
