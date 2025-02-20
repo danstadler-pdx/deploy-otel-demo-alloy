@@ -14,6 +14,11 @@ spec:
         - name: OTEL_COLLECTOR_NAME
           value: k8s-monitoring-alloy-receiver.collector
 
+      schedulingRules:
+        nodeSelector:
+          cloud.google.com/gke-nodepool: primary-nodes
+
+
     # turn off the included olly stack
     opentelemetry-collector:
       enabled: false
@@ -32,11 +37,12 @@ spec:
 
     components:
 
-      # this is already in place in this exercise, so don't deploy again
-      frontend:
-        enabled: false
-
       # uncommment 3 lines below to expose the frontend proxy with an external IP address (tested only on GKE)
       frontendProxy:
         service:
           type: LoadBalancer
+
+      # # this is already in place in this exercise, so don't deploy again
+      # frontend:
+      #   enabled: false
+
