@@ -26,8 +26,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  dependsOn:
-    - name: infra-otel-frontend
+  # dependsOn:
+  #   - name: infra-otel-frontend
   retryInterval: 5m
   timeout: 5m
   sourceRef:
