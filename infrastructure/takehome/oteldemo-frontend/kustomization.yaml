@@ -6,4 +6,4 @@ resources:
   - namespace.yaml
   - service-account.yaml
   - component-frontend.yaml
-  - component-frontend-proxy.yaml
+  # - component-frontend-proxy.yaml

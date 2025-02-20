@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: open-telemetry
-  name: opentelemetry-demo-frontend
+  name: open-telemetry-demo-frontend
   labels:
     helm.sh/chart: opentelemetry-demo-0.33.8
     
