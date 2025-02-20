@@ -30,20 +30,13 @@ spec:
     opensearch:
       enabled: false
 
-    # these are already in place in this exercise, so don't deploy them again
     components:
+
+      # this is already in place in this exercise, so don't deploy again
       frontend:
         enabled: false
-      frontendProxy:
-        enabled: false
-      kafka:
-        enabled: false
 
-    # in other cases, we did this:
-    # uncommment 4 lines below to expose the frontend proxy with an external IP address (tested only on GKE)
-    # in the "takehome" cluster, frontendProxy is being managed directly via K8s manifest,
-    # and the LB is already configured there. So don't do it again here.
-    # components:
-    #   frontendProxy:
-    #     service:
-    #       type: LoadBalancer
+      # uncommment 3 lines below to expose the frontend proxy with an external IP address (tested only on GKE)
+      frontendProxy:
+        service:
+          type: LoadBalancer

@@ -1,21 +1,3 @@
-## Kafka (from OtelDemo)
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: infra-kafka
-  namespace: flux-system
-spec:
-  interval: 1h
-  retryInterval: 5m
-  timeout: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./infrastructure/takehome/messaging/kafka/
-  prune: true
-  wait: true
-
 ## Frontend and FrontendProxy (from OtelDemo)
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
