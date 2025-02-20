@@ -86,11 +86,11 @@ spec:
               value: service.name=$(OTEL_SERVICE_NAME),service.namespace=opentelemetry-demo,service.version=1.12.0
           resources:
             requests:
-              cpu: "3"
-              memory: 7000Mi
+              cpu: "2"
+              memory: 2000Mi
             limits:
-              cpu: "3.5"
-              memory: 9000Mi
+              cpu: "2.5"
+              memory: 4000Mi
           securityContext:
             runAsGroup: 1001
             runAsNonRoot: true
