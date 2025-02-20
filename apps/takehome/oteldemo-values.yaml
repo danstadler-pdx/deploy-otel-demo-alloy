@@ -42,7 +42,7 @@ spec:
         service:
           type: LoadBalancer
 
-      # # this is already in place in this exercise, so don't deploy again
-      # frontend:
-      #   enabled: false
-
+      frontend:
+        schedulingRules:
+          nodeSelector:
+            cloud.google.com/gke-nodepool: big-nodes
