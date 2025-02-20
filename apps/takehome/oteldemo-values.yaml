@@ -46,3 +46,10 @@ spec:
         schedulingRules:
           nodeSelector:
             cloud.google.com/gke-nodepool: big-nodes
+        resources:
+          requests:
+            cpu: "3.0"
+            memory: 3000Mi
+          limits:
+            cpu: "3.5"
+            memory: 4000Mi
