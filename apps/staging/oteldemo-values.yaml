@@ -34,3 +34,8 @@ spec:
     #   frontendProxy:
     #     service:
     #       type: LoadBalancer
+
+    # uncommment to manage frontend replicaset count
+    components:
+      frontend:
+        replicas: 2
