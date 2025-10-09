@@ -120,6 +120,32 @@ data:
         ]
       }
 
+      // output {
+      //   metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
+      //   logs    = [otelcol.processor.batch.default.input]
+      //   traces  = [
+      //     otelcol.processor.batch.default.input,
+      //     otelcol.connector.host_info.default.input,
+      //   ]
+      // }
+
+      output {
+        metrics = [otelcol.processor.transform.add_labels_for_KG.input]
+        logs    = [otelcol.processor.transform.add_labels_for_KG.input]
+        traces  = [otelcol.processor.transform.add_labels_for_KG.input]
+      }
+    }
+
+
+    // this is based on conversations about using KG with App O11y
+    otelcol.processor.transform "add_labels_for_KG" {
+      error_mode = "ignore"
+      trace_statements {
+        context    = "resource"
+        statements = [
+          "set(attributes[\"k8s.namespace.name\"], \"collector\")",
+        ]
+      }
       output {
         metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
         logs    = [otelcol.processor.batch.default.input]
@@ -128,34 +154,7 @@ data:
           otelcol.connector.host_info.default.input,
         ]
       }
-
-      //output {
-      //  metrics = [otelcol.processor.transform.add_labels_for_KG.input]
-      //  logs    = [otelcol.processor.transform.add_labels_for_KG.input]
-      //  traces  = [otelcol.processor.transform.add_labels_for_KG.input]
-      //}
     }
-
-
-    // this is based on conversations about using KG with App O11y
-    // otelcol.processor.transform "add_labels_for_KG" {
-    //   error_mode = "ignore"
-    //   trace_statements {
-    //     context    = "span"
-    //     statements = [
-    //       "set(attributes[\"k8s.namespace.name\"], \"collector\")",
-    //     ]
-    //   }
-    //   output {
-    //     metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
-    //     logs    = [otelcol.processor.batch.default.input]
-    //     traces  = [
-    //       otelcol.processor.batch.default.input,
-    //       otelcol.connector.host_info.default.input,
-    //     ]
-    //   }
-    // }
-
 
 
     otelcol.connector.host_info "default" {
