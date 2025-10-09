@@ -34,7 +34,7 @@ spec:
     controller:
       type: 'deployment'
     alloy:
-      stabilityLevel: "experimental"
+      # stabilityLevel: "experimental"
       extraPorts:
         - name: "otlp-grpc"
           port: 4317
