@@ -126,7 +126,9 @@ otelcol.processor.transform "add_labels_for_KG" {
     statements = [
       "set(attributes[\"k8s.namespace.name\"], \"collector\")",
       "set(attributes[\"k8s.cluster.name\"], \"zzz-stadler-tf-take-home\")",
-	  "set(attributes[\"cloud.provider\"], \"gcp\")",
+      "set(attributes[\"cloud.provider\"], \"gcp\")",
+      "set(attributes[\"cloud.account.id\"], \"solutions-engineering-248511\")",
+      "set(attributes[\"cloud.availability.zone\"], \"us-central1-a\")",
     ]
   }
   output {
