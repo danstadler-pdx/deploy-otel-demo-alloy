@@ -1,6 +1,10 @@
 apiVersion: v1
 data:
   config.alloy: |+
+    livedebugging {
+      enabled = true
+    }
+
     otelcol.receiver.otlp "default" {
       // https://grafana.com/docs/alloy/latest/reference/components/otelcol.receiver.otlp/
 
