@@ -117,7 +117,7 @@ otelcol.processor.transform "add_labels_for_KG" {
   trace_statements {
     context    = "span"
     statements = [
-      `set(attributes["k8s_namespace_name"], "collector")`,
+      `set(attributes["k8s.namespace.name"], "collector")`,
     ]
   }
 
