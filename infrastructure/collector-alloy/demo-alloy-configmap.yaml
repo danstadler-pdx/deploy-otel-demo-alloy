@@ -10,11 +10,23 @@ data:
       http { }
 
       output {
+        metrics = [otelcol.processor.k8sattributes.default.input]
+        logs    = [otelcol.processor.k8sattributes.default.input]
+        traces  = [otelcol.processor.k8sattributes.default.input]
+      }
+    }
+
+    // added this after discussion with Pete
+    // will add several things, including the k8s namespace name, which I needed for KG
+    otelcol.processor.k8sattributes "default" {
+      output {
         metrics = [otelcol.processor.resourcedetection.default.input]
         logs    = [otelcol.processor.resourcedetection.default.input]
         traces  = [otelcol.processor.resourcedetection.default.input]
       }
     }
+
+
 
     otelcol.processor.resourcedetection "default" {
       // https://grafana.com/docs/alloy/latest/reference/components/otelcol.processor.resourcedetection/
@@ -105,26 +117,6 @@ data:
       }
 
       output {
-        metrics = [otelcol.processor.transform.add_labels_for_KG.input]
-        logs    = [otelcol.processor.transform.add_labels_for_KG.input]
-        traces  = [otelcol.processor.transform.add_labels_for_KG.input]
-      }
-    }
-
-
-    // this is based on conversations about using KG with App O11y
-    otelcol.processor.transform "add_labels_for_KG" {
-
-      error_mode = "ignore"
-
-      trace_statements {
-        context    = "span"
-        statements = [
-          "set(attributes[\"k8s.namespace.name\"], \"collector\")",
-        ]
-      }
-
-      output {
         metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
         logs    = [otelcol.processor.batch.default.input]
         traces  = [
@@ -132,8 +124,33 @@ data:
           otelcol.connector.host_info.default.input,
         ]
       }
+
+      //output {
+      //  metrics = [otelcol.processor.transform.add_labels_for_KG.input]
+      //  logs    = [otelcol.processor.transform.add_labels_for_KG.input]
+      //  traces  = [otelcol.processor.transform.add_labels_for_KG.input]
+      //}
     }
 
+
+    // this is based on conversations about using KG with App O11y
+    // otelcol.processor.transform "add_labels_for_KG" {
+    //   error_mode = "ignore"
+    //   trace_statements {
+    //     context    = "span"
+    //     statements = [
+    //       "set(attributes[\"k8s.namespace.name\"], \"collector\")",
+    //     ]
+    //   }
+    //   output {
+    //     metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
+    //     logs    = [otelcol.processor.batch.default.input]
+    //     traces  = [
+    //       otelcol.processor.batch.default.input,
+    //       otelcol.connector.host_info.default.input,
+    //     ]
+    //   }
+    // }
 
 
 
