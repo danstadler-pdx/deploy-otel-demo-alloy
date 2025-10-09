@@ -2,7 +2,7 @@ apiVersion: v1
 data:
   config.alloy: |+
     livedebugging {
-      enabled = true
+      enabled = false
     }
 
     otelcol.receiver.otlp "default" {
