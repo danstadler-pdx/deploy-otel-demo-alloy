@@ -1,17 +1,26 @@
 otelcol.receiver.otlp "default" {
   // https://grafana.com/docs/alloy/latest/reference/components/otelcol.receiver.otlp/
-
   // configures the default grpc endpoint "0.0.0.0:4317"
   grpc { }
   // configures the default http/protobuf endpoint "0.0.0.0:4318"
   http { }
-
   output {
-    metrics = [otelcol.processor.resourcedetection.default.input]
-    logs    = [otelcol.processor.resourcedetection.default.input]
-    traces  = [otelcol.processor.resourcedetection.default.input]
+	metrics = [otelcol.processor.k8sattributes.default.input]
+	logs    = [otelcol.processor.k8sattributes.default.input]
+	traces  = [otelcol.processor.k8sattributes.default.input]
   }
 }
+
+// added this after discussion with Pete
+// supposed to add several labels, including the k8s namespace name, which I needed for KG
+otelcol.processor.k8sattributes "default" {
+  output {
+	metrics = [otelcol.processor.resourcedetection.default.input]
+	logs    = [otelcol.processor.resourcedetection.default.input]
+	traces  = [otelcol.processor.resourcedetection.default.input]
+  }
+}
+
 
 otelcol.processor.resourcedetection "default" {
   // https://grafana.com/docs/alloy/latest/reference/components/otelcol.processor.resourcedetection/
@@ -111,16 +120,15 @@ otelcol.processor.transform "reduce_otel_demo_cardinality" {
 
 // this is based on conversations about using KG with App O11y
 otelcol.processor.transform "add_labels_for_KG" {
-
   error_mode = "ignore"
-
   trace_statements {
-    context    = "span"
+    context    = "resource"
     statements = [
-      `set(attributes["k8s.namespace.name"], "collector")`,
+      "set(attributes[\"k8s.namespace.name\"], \"collector\")",
+      "set(attributes[\"k8s.cluster.name\"], \"zzz-stadler-tf-take-home\")",
+	  "set(attributes[\"cloud.provider\"], \"gcp\")",
     ]
   }
-
   output {
     metrics = [otelcol.processor.transform.add_resource_attributes_as_metric_attributes.input]
     logs    = [otelcol.processor.batch.default.input]
