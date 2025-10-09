@@ -129,6 +129,7 @@ otelcol.processor.transform "add_labels_for_KG" {
       "set(attributes[\"cloud.provider\"], \"gcp\")",
       "set(attributes[\"cloud.account.id\"], \"solutions-engineering-248511\")",
       "set(attributes[\"cloud.availability.zone\"], \"us-central1-a\")",
+      "set(attributes[\"k8s.pod.name\"], \"12345\")",
     ]
   }
   output {
