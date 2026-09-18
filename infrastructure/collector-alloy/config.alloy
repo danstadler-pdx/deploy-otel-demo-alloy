@@ -118,18 +118,30 @@ otelcol.processor.transform "reduce_otel_demo_cardinality" {
 }
 
 
-// this is based on conversations about using KG with App O11y
+// App O11y + KG require deployment.environment on all signals; k8sattributes
+// upstream fills k8s.namespace.name / k8s.pod.name from real pod metadata,
+// so we must NOT overwrite them here.
 otelcol.processor.transform "add_labels_for_KG" {
   error_mode = "ignore"
   trace_statements {
     context    = "resource"
     statements = [
-      "set(attributes[\"k8s.namespace.name\"], \"collector\")",
-      "set(attributes[\"k8s.cluster.name\"], \"zzz-stadler-tf-take-home\")",
-      "set(attributes[\"cloud.provider\"], \"gcp\")",
-      "set(attributes[\"cloud.account.id\"], \"solutions-engineering-248511\")",
-      "set(attributes[\"cloud.availability.zone\"], \"us-central1-a\")",
-      "set(attributes[\"k8s.pod.name\"], \"12345\")",
+      "set(attributes[\"deployment.environment\"], \"promQL101\")",
+      "set(attributes[\"k8s.cluster.name\"], \"promql101\")",
+    ]
+  }
+  metric_statements {
+    context    = "resource"
+    statements = [
+      "set(attributes[\"deployment.environment\"], \"promQL101\")",
+      "set(attributes[\"k8s.cluster.name\"], \"promql101\")",
+    ]
+  }
+  log_statements {
+    context    = "resource"
+    statements = [
+      "set(attributes[\"deployment.environment\"], \"promQL101\")",
+      "set(attributes[\"k8s.cluster.name\"], \"promql101\")",
     ]
   }
   output {
