@@ -41,6 +41,7 @@ otelcol.processor.transform "drop_unneeded_resource_attributes" {
   // https://grafana.com/docs/alloy/latest/reference/components/otelcol.processor.transform/
   error_mode = "ignore"
 
+  // service.namespace is dropped so Prom job label becomes just the service name (e.g. "frontendproxy") instead of "opentelemetry-demo/frontendproxy".
   trace_statements {
     context    = "resource"
     statements = [
@@ -53,6 +54,7 @@ otelcol.processor.transform "drop_unneeded_resource_attributes" {
       "delete_key(attributes, \"process.runtime.description\")",
       "delete_key(attributes, \"process.runtime.name\")",
       "delete_key(attributes, \"process.runtime.version\")",
+      "delete_key(attributes, \"service.namespace\")",
     ]
   }
 
@@ -68,6 +70,7 @@ otelcol.processor.transform "drop_unneeded_resource_attributes" {
       "delete_key(attributes, \"process.runtime.description\")",
       "delete_key(attributes, \"process.runtime.name\")",
       "delete_key(attributes, \"process.runtime.version\")",
+      "delete_key(attributes, \"service.namespace\")",
     ]
   }
 
@@ -83,6 +86,7 @@ otelcol.processor.transform "drop_unneeded_resource_attributes" {
       "delete_key(attributes, \"process.runtime.description\")",
       "delete_key(attributes, \"process.runtime.name\")",
       "delete_key(attributes, \"process.runtime.version\")",
+      "delete_key(attributes, \"service.namespace\")",
     ]
   }
 

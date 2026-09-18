@@ -18,28 +18,32 @@ data:
     \   traces  = [otelcol.processor.transform.drop_unneeded_resource_attributes.input]\n
     \ }\n}\n\notelcol.processor.transform \"drop_unneeded_resource_attributes\" {\n
     \ // https://grafana.com/docs/alloy/latest/reference/components/otelcol.processor.transform/\n
-    \ error_mode = \"ignore\"\n\n  trace_statements {\n    context    = \"resource\"\n
-    \   statements = [\n      \"delete_key(attributes, \\\"k8s.pod.start_time\\\")\",\n
-    \     \"delete_key(attributes, \\\"os.description\\\")\",\n      \"delete_key(attributes,
-    \\\"os.type\\\")\",\n      \"delete_key(attributes, \\\"process.command_args\\\")\",\n
-    \     \"delete_key(attributes, \\\"process.executable.path\\\")\",\n      \"delete_key(attributes,
-    \\\"process.pid\\\")\",\n      \"delete_key(attributes, \\\"process.runtime.description\\\")\",\n
-    \     \"delete_key(attributes, \\\"process.runtime.name\\\")\",\n      \"delete_key(attributes,
-    \\\"process.runtime.version\\\")\",\n    ]\n  }\n\n  metric_statements {\n    context
+    \ error_mode = \"ignore\"\n\n  // service.namespace is dropped so Prom job label
+    becomes just the service name (e.g. \"frontendproxy\") instead of \"opentelemetry-demo/frontendproxy\".\n
+    \ trace_statements {\n    context    = \"resource\"\n    statements = [\n      \"delete_key(attributes,
+    \\\"k8s.pod.start_time\\\")\",\n      \"delete_key(attributes, \\\"os.description\\\")\",\n
+    \     \"delete_key(attributes, \\\"os.type\\\")\",\n      \"delete_key(attributes,
+    \\\"process.command_args\\\")\",\n      \"delete_key(attributes, \\\"process.executable.path\\\")\",\n
+    \     \"delete_key(attributes, \\\"process.pid\\\")\",\n      \"delete_key(attributes,
+    \\\"process.runtime.description\\\")\",\n      \"delete_key(attributes, \\\"process.runtime.name\\\")\",\n
+    \     \"delete_key(attributes, \\\"process.runtime.version\\\")\",\n      \"delete_key(attributes,
+    \\\"service.namespace\\\")\",\n    ]\n  }\n\n  metric_statements {\n    context
     \   = \"resource\"\n    statements = [\n      \"delete_key(attributes, \\\"k8s.pod.start_time\\\")\",\n
     \     \"delete_key(attributes, \\\"os.description\\\")\",\n      \"delete_key(attributes,
     \\\"os.type\\\")\",\n      \"delete_key(attributes, \\\"process.command_args\\\")\",\n
     \     \"delete_key(attributes, \\\"process.executable.path\\\")\",\n      \"delete_key(attributes,
     \\\"process.pid\\\")\",\n      \"delete_key(attributes, \\\"process.runtime.description\\\")\",\n
     \     \"delete_key(attributes, \\\"process.runtime.name\\\")\",\n      \"delete_key(attributes,
-    \\\"process.runtime.version\\\")\",\n    ]\n  }\n\n  log_statements {\n    context
-    \   = \"resource\"\n    statements = [\n      \"delete_key(attributes, \\\"k8s.pod.start_time\\\")\",\n
-    \     \"delete_key(attributes, \\\"os.description\\\")\",\n      \"delete_key(attributes,
-    \\\"os.type\\\")\",\n      \"delete_key(attributes, \\\"process.command_args\\\")\",\n
-    \     \"delete_key(attributes, \\\"process.executable.path\\\")\",\n      \"delete_key(attributes,
-    \\\"process.pid\\\")\",\n      \"delete_key(attributes, \\\"process.runtime.description\\\")\",\n
-    \     \"delete_key(attributes, \\\"process.runtime.name\\\")\",\n      \"delete_key(attributes,
-    \\\"process.runtime.version\\\")\",\n    ]\n  }\n\n  output {\n    metrics = [otelcol.processor.transform.reduce_otel_demo_cardinality.input]\n
+    \\\"process.runtime.version\\\")\",\n      \"delete_key(attributes, \\\"service.namespace\\\")\",\n
+    \   ]\n  }\n\n  log_statements {\n    context    = \"resource\"\n    statements
+    = [\n      \"delete_key(attributes, \\\"k8s.pod.start_time\\\")\",\n      \"delete_key(attributes,
+    \\\"os.description\\\")\",\n      \"delete_key(attributes, \\\"os.type\\\")\",\n
+    \     \"delete_key(attributes, \\\"process.command_args\\\")\",\n      \"delete_key(attributes,
+    \\\"process.executable.path\\\")\",\n      \"delete_key(attributes, \\\"process.pid\\\")\",\n
+    \     \"delete_key(attributes, \\\"process.runtime.description\\\")\",\n      \"delete_key(attributes,
+    \\\"process.runtime.name\\\")\",\n      \"delete_key(attributes, \\\"process.runtime.version\\\")\",\n
+    \     \"delete_key(attributes, \\\"service.namespace\\\")\",\n    ]\n  }\n\n  output
+    {\n    metrics = [otelcol.processor.transform.reduce_otel_demo_cardinality.input]\n
     \   logs    = [otelcol.processor.transform.reduce_otel_demo_cardinality.input]\n
     \   traces  = [otelcol.processor.transform.reduce_otel_demo_cardinality.input]\n
     \ }\n\n}\n\n// (This component is not part of the starter AppOlly production config
